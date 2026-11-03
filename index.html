@@ -1,296 +1,678 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANK COIN BD | Official Project</title>
+<title>ANK COIN BD | Trading Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg:#090d18;
-  --panel:#151e2e;
-  --gold:#e9b83f;
-  --text:#ffffff;
-  --muted:#bdc5d3;
-  --line:#57451e;
+:root{
+ --bg:#080b12;
+ --panel:#111722;
+ --panel2:#171f2d;
+ --gold:#e9bd59;
+ --gold2:#ffe09a;
+ --text:#f4f5f7;
+ --muted:#8993a5;
+ --green:#19c784;
+ --red:#f05268;
+ --border:#252d3a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:var(--bg);color:var(--text);
-  font-family:Arial,"Noto Sans Bengali",sans-serif;
-  line-height:1.75;transition:.35s;
+ background:var(--bg);color:var(--text);
+ font-family:'Hind Siliguri',sans-serif;
 }
-body[data-theme="blue"]{
-  --bg:#071525;--panel:#102b46;--gold:#54c8ff;
-  --line:#205b80;
+button{font:inherit;cursor:pointer}
+a{text-decoration:none;color:inherit}
+.app{max-width:1450px;margin:auto}
+.topbar{
+ height:70px;padding:0 25px;display:flex;
+ align-items:center;justify-content:space-between;
+ border-bottom:1px solid var(--border);
+ background:#0c111b;position:sticky;top:0;z-index:20;
 }
-body[data-theme="purple"]{
-  --bg:#150d20;--panel:#281638;--gold:#d6a5ff;
-  --line:#69418b;
+.brand{display:flex;align-items:center;gap:11px}
+.brand-icon{
+ width:39px;height:39px;border-radius:12px;
+ background:linear-gradient(145deg,#ffe6a1,#b17b19);
+ color:#17100a;display:grid;place-items:center;
+ font-size:22px;font-weight:800;
 }
-body[data-theme="green"]{
-  --bg:#071912;--panel:#102c20;--gold:#72e6a3;
-  --line:#286b48;
+.brand-name{
+ font-family:'Outfit',sans-serif;font-weight:800;
+ color:var(--gold2);font-size:19px;letter-spacing:1px;
 }
-body[data-theme="red"]{
-  --bg:#1b0c10;--panel:#30151d;--gold:#ff9a9a;
-  --line:#78333d;
+.brand-sub{font-size:10px;color:var(--muted);letter-spacing:2px}
+.top-actions{display:flex;align-items:center;gap:13px}
+.demo-tag{
+ border:1px solid #846728;color:var(--gold);
+ background:#292111;padding:6px 11px;border-radius:30px;
+ font:600 10px 'Outfit',sans-serif;letter-spacing:1px;
 }
-header{
-  position:sticky;top:0;z-index:10;
-  background:var(--panel);border-bottom:1px solid var(--line);
-  padding:13px 5%;display:flex;justify-content:space-between;
-  align-items:center;gap:12px;
+.menu-btn{
+ background:var(--panel2);border:1px solid var(--border);
+ color:white;border-radius:10px;padding:8px 13px;font-size:21px;
 }
-.logo{font-size:21px;font-weight:900;color:var(--gold)}
-.menu-btn,.btn{
-  border:0;border-radius:9px;padding:11px 17px;
-  background:var(--gold);color:#111;font-weight:bold;
-  cursor:pointer;text-decoration:none;display:inline-block;
+.layout{
+ display:grid;grid-template-columns:225px minmax(0,1fr);
+ min-height:calc(100vh - 70px);
 }
-.menu-btn{font-size:20px;padding:6px 13px}
-.hero{
-  padding:75px 20px;text-align:center;
-  background:radial-gradient(ellipse at top,var(--panel),var(--bg));
+.sidebar{
+ border-right:1px solid var(--border);
+ padding:24px 14px;background:#0c111b;
 }
-.coin{font-size:65px;animation:float 3s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-12px)}}
-.hero h1{font-size:clamp(28px,5vw,48px);color:var(--gold)}
-.hero p{max-width:650px;margin:15px auto;color:var(--muted)}
-section{padding:45px 6%;scroll-margin-top:75px}
-h2{color:var(--gold);font-size:27px;margin-bottom:20px}
+.side-label{
+ color:#697487;font-size:11px;letter-spacing:1.5px;
+ margin:15px 10px 9px;font-family:'Outfit',sans-serif;
+}
+.nav{
+ display:flex;gap:12px;align-items:center;
+ padding:12px;border-radius:9px;color:#aab3c1;
+ margin-bottom:5px;font-size:14px;
+}
+.nav.active,.nav:hover{
+ background:#292316;color:var(--gold2);
+}
+.nav-icon{width:22px;text-align:center;font-size:17px}
+.side-note{
+ margin-top:35px;padding:14px;background:var(--panel);
+ border:1px solid var(--border);border-radius:12px;
+ font-size:12px;color:var(--muted);
+}
+.main{padding:24px;min-width:0}
+.welcome{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:12px;margin-bottom:22px;
+}
+.welcome h1{font-size:25px;font-weight:700}
+.welcome p{color:var(--muted);font-size:13px}
+.market-status{font:11px 'Outfit',sans-serif;color:var(--green)}
+.dot{
+ display:inline-block;width:7px;height:7px;
+ border-radius:50%;background:var(--green);
+ margin-right:6px;box-shadow:0 0 9px var(--green);
+}
+.stats{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:13px;margin-bottom:20px;
+}
+.stat{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:13px;padding:16px;min-width:0;
+}
+.stat-label{color:var(--muted);font-size:12px}
+.stat-value{
+ font:700 21px 'Outfit',sans-serif;margin-top:8px;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.stat-change{font:12px 'Outfit',sans-serif;margin-top:6px}
+.up{color:var(--green)!important}
+.down{color:var(--red)!important}
 .panel{
-  background:var(--panel);border:1px solid var(--line);
-  border-radius:16px;padding:23px;margin:12px 0;
-  box-shadow:0 10px 30px #0003;
-  animation:appear .7s ease both;
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:14px;padding:19px;margin-bottom:19px;
+ min-width:0;
 }
-@keyframes appear{
-  from{opacity:0;transform:translateY(15px)}
-  to{opacity:1;transform:translateY(0)}
+.panel-heading{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:10px;margin-bottom:17px;
 }
-.grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:17px;
+.panel-heading h2{font-size:17px;font-weight:600}
+.sub{font-size:11px;color:var(--muted)}
+.chart-head{
+ display:flex;align-items:center;gap:12px;flex-wrap:wrap;
 }
-.muted{color:var(--muted)}
-.theme-list{display:flex;flex-wrap:wrap;gap:10px}
-.theme-option{
-  background:var(--panel);color:var(--text);
-  border:1px solid var(--line);padding:12px 15px;
-  border-radius:10px;cursor:pointer;
+.asset-icon{
+ width:37px;height:37px;border-radius:50%;
+ display:grid;place-items:center;background:#292316;
+ color:var(--gold);font:800 17px 'Outfit',sans-serif;
 }
-.theme-option.active{background:var(--gold);color:#111}
-table{width:100%;border-collapse:collapse;min-width:470px}
-th,td{padding:11px;border-bottom:1px solid var(--line);text-align:center}
-th{color:var(--gold)}
+.asset-name{font:700 17px 'Outfit',sans-serif}
+.asset-symbol{font:11px 'Outfit',sans-serif;color:var(--muted)}
+.current-price{
+ margin-left:auto;text-align:right;
+ font:700 23px 'Outfit',sans-serif;
+}
+.timeframes{display:flex;gap:6px;flex-wrap:wrap}
+.timeframes button{
+ border:1px solid var(--border);background:#0c111b;
+ color:var(--muted);padding:6px 11px;border-radius:7px;
+ font:12px 'Outfit',sans-serif;
+}
+.timeframes button.active{
+ background:#3b301a;border-color:var(--gold);color:var(--gold2);
+}
+.chart-box{height:280px;width:100%;position:relative;margin-top:12px}
+canvas{width:100%;height:100%;display:block}
+.chart-foot{
+ display:flex;justify-content:space-between;
+ color:var(--muted);font-size:11px;margin-top:10px;
+}
+.market-grid{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:12px;
+}
+.market-card{
+ background:#0c111b;border:1px solid var(--border);
+ padding:14px;border-radius:11px;cursor:pointer;
+ transition:.2s;min-width:0;
+}
+.market-card:hover,.market-card.selected{
+ border-color:var(--gold);transform:translateY(-2px);
+}
+.market-top{display:flex;justify-content:space-between;align-items:center}
+.market-symbol{font:700 13px 'Outfit',sans-serif}
+.market-full{font-size:10px;color:var(--muted)}
+.market-price{
+ font:700 17px 'Outfit',sans-serif;margin-top:12px;
+ overflow:hidden;text-overflow:ellipsis;
+}
+.market-percent{font:12px 'Outfit',sans-serif;margin-top:5px}
 .table-wrap{overflow-x:auto}
-.notice{
-  border-left:4px solid var(--gold);
-  background:var(--panel);padding:18px;border-radius:9px;
+table{width:100%;border-collapse:collapse;min-width:500px}
+th,td{
+ padding:13px 10px;text-align:left;
+ border-bottom:1px solid var(--border);
+ font-size:13px;
 }
-#drawer{
-  position:fixed;z-index:30;inset:0;background:#0009;
-  opacity:0;visibility:hidden;transition:.3s;
+th{font-size:11px;color:var(--muted);font-weight:500}
+td{font-family:'Outfit','Hind Siliguri',sans-serif}
+.coin-cell{display:flex;align-items:center;gap:9px}
+.coin-round{
+ width:29px;height:29px;border-radius:50%;
+ display:grid;place-items:center;background:#292316;color:var(--gold);
+ font-weight:bold;
 }
-#drawer.open{opacity:1;visibility:visible}
-.drawer-content{
-  width:min(340px,85%);height:100%;background:var(--panel);
-  padding:25px;transform:translateX(-100%);transition:.3s;
-  overflow-y:auto;
+.badge{
+ padding:4px 8px;border-radius:5px;
+ background:#102a22;color:var(--green);font-size:11px;
 }
-#drawer.open .drawer-content{transform:translateX(0)}
-.drawer-content a{
-  display:block;padding:12px;color:var(--text);
-  text-decoration:none;border-bottom:1px solid var(--line);
+.badge.loss{background:#321923;color:var(--red)}
+.two-col{
+ display:grid;grid-template-columns:1fr 1fr;gap:17px;
 }
-.close{float:right;background:none;color:var(--gold);border:0;font-size:25px}
-footer{text-align:center;padding:25px;background:#050811;color:#aaa}
-.whatsapp{
-  position:fixed;right:18px;bottom:18px;z-index:15;
-  background:#20c66a;color:white;border-radius:50px;
-  padding:13px 19px;text-decoration:none;font-weight:bold;
-  box-shadow:0 5px 20px #0006;
+.info-line{
+ display:flex;justify-content:space-between;
+ padding:11px 0;border-bottom:1px solid var(--border);
+ font-size:13px;gap:10px;
 }
-.small{font-size:13px;color:var(--muted)}
+.info-line span:first-child{color:var(--muted)}
+.disclaimer{
+ border:1px solid #80632c;background:#201b10;
+ padding:15px;border-radius:10px;color:#e6d7b4;
+ font-size:12px;line-height:1.8;
+}
+.contact-btn{
+ display:inline-block;background:#137a4e;color:white;
+ border-radius:9px;padding:11px 18px;margin-top:13px;
+ font-weight:600;
+}
+footer{
+ text-align:center;color:var(--muted);
+ font-size:11px;padding:22px;border-top:1px solid var(--border);
+}
+.drawer-bg{
+ position:fixed;inset:0;background:#000a;z-index:40;
+ opacity:0;visibility:hidden;transition:.25s;
+}
+.drawer-bg.open{opacity:1;visibility:visible}
+.drawer{
+ background:#111722;width:min(330px,85%);height:100%;
+ padding:22px;transform:translateX(-100%);
+ transition:.25s;overflow-y:auto;
+}
+.drawer-bg.open .drawer{transform:translateX(0)}
+.drawer-head{display:flex;justify-content:space-between;margin-bottom:20px}
+.drawer-head button{background:none;border:0;color:var(--gold);font-size:25px}
+.drawer a{
+ display:block;padding:12px 4px;border-bottom:1px solid var(--border);
+ color:#d4d9e2;font-size:14px;
+}
+@media(max-width:950px){
+ .layout{grid-template-columns:1fr}
+ .sidebar{display:none}
+ .market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:600px){
-  header{padding:12px 4%}
-  .logo{font-size:17px}
-  section{padding:35px 5%}
+ .topbar{height:61px;padding:0 13px}
+ .brand-name{font-size:16px}
+ .brand-icon{width:34px;height:34px}
+ .main{padding:15px 12px}
+ .welcome h1{font-size:20px}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .stat{padding:12px}
+ .stat-value{font-size:18px}
+ .panel{padding:13px}
+ .chart-box{height:225px}
+ .market-grid{gap:8px}
+ .market-card{padding:11px}
+ .market-price{font-size:15px}
+ .two-col{grid-template-columns:1fr}
+ .current-price{font-size:18px}
 }
 </style>
 </head>
 
-<body data-theme="gold">
+<body>
+<div class="app">
 
-<header>
-  <div class="logo">🪙 ANK COIN BD</div>
-  <button class="menu-btn" onclick="openMenu()" aria-label="Open menu">☰</button>
+<header class="topbar">
+ <div class="brand">
+  <div class="brand-icon">A</div>
+  <div>
+   <div class="brand-name">ANK COIN BD</div>
+   <div class="brand-sub">DIGITAL MARKET DASHBOARD</div>
+  </div>
+ </div>
+ <div class="top-actions">
+  <span class="demo-tag">DEMO MARKET</span>
+  <button class="menu-btn" onclick="openDrawer()">☰</button>
+ </div>
 </header>
 
-<div id="drawer" onclick="closeMenuOutside(event)">
-  <div class="drawer-content">
-    <button class="close" onclick="closeMenu()">×</button>
-    <h2>মেনু ও নিয়মাবলি</h2>
-    <a href="#home" onclick="closeMenu()">হোম</a>
-    <a href="#themes" onclick="closeMenu()">পাঁচটি থিম</a>
-    <a href="#about" onclick="closeMenu()">প্রজেক্ট পরিচিতি</a>
-    <a href="#announcement" onclick="closeMenu()">বিশেষ ঘোষণা</a>
-    <a href="#calculation" onclick="closeMenu()">সম্ভাব্য হিসাব</a>
-    <a href="#rules" onclick="closeMenu()">চুক্তির শর্তাবলি</a>
-    <a href="#risk" onclick="closeMenu()">ঝুঁকি ও সতর্কতা</a>
-    <a href="#contact" onclick="closeMenu()">যোগাযোগ</a>
-  </div>
+<div class="layout">
+
+<aside class="sidebar">
+ <div class="side-label">MAIN MENU</div>
+ <a class="nav active" href="#dashboard"><span class="nav-icon">▦</span> ড্যাশবোর্ড</a>
+ <a class="nav" href="#market"><span class="nav-icon">◈</span> মার্কেট</a>
+ <a class="nav" href="#watchlist"><span class="nav-icon">☆</span> ওয়াচলিস্ট</a>
+ <a class="nav" href="#overview"><span class="nav-icon">▤</span> মার্কেট ওভারভিউ</a>
+
+ <div class="side-label">INFORMATION</div>
+ <a class="nav" href="#rules"><span class="nav-icon">☷</span> নিয়মাবলি</a>
+ <a class="nav" href="#about"><span class="nav-icon">ⓘ</span> আমাদের সম্পর্কে</a>
+ <a class="nav" href="#contact"><span class="nav-icon">✉</span> যোগাযোগ</a>
+
+ <div class="side-note">
+  <b style="color:var(--gold)">মার্কেট ডেমো</b>
+  <p style="margin-top:7px">এই ড্যাশবোর্ডে প্রদর্শিত দাম ও চার্ট কাল্পনিক সিমুলেশন। এগুলো লাইভ এক্সচেঞ্জ ডেটা নয়।</p>
+ </div>
+</aside>
+
+<main class="main" id="dashboard">
+
+<div class="welcome">
+ <div>
+  <h1>স্বাগতম, Mohammad Ayaan</h1>
+  <p>আপনার ডিজিটাল মার্কেট ড্যাশবোর্ড</p>
+ </div>
+ <div class="market-status"><span class="dot"></span>SIMULATION RUNNING</div>
 </div>
 
-<div class="hero" id="home">
-  <div class="coin">🪙</div>
-  <h1>WELCOME TO ANK COIN BD</h1>
-  <p>
-    স্বাগতম ANK COIN BD-এর অফিসিয়াল প্রজেক্ট পেজে।
-    এখানে প্রজেক্ট পরিচিতি, ঘোষণা, শর্তাবলি ও আপডেট দেখুন।
+<div class="stats">
+ <div class="stat">
+  <div class="stat-label">মোট মার্কেট অ্যাসেট</div>
+  <div class="stat-value">04</div>
+  <div class="stat-change">Demo Assets</div>
+ </div>
+ <div class="stat">
+  <div class="stat-label">মার্কেট অবস্থা</div>
+  <div class="stat-value up">ACTIVE</div>
+  <div class="stat-change">Auto Updating</div>
+ </div>
+ <div class="stat">
+  <div class="stat-label">সর্বশেষ আপডেট</div>
+  <div class="stat-value" id="clock">--:--:--</div>
+  <div class="stat-change">Local Time</div>
+ </div>
+ <div class="stat">
+  <div class="stat-label">ডেটার ধরন</div>
+  <div class="stat-value" style="font-size:16px">SIMULATED</div>
+  <div class="stat-change">Not Real Market</div>
+ </div>
+</div>
+
+<section class="panel" id="market">
+ <div class="panel-heading">
+  <div>
+   <h2>📈 লাইভ মার্কেট চার্ট</h2>
+   <div class="sub">স্বয়ংক্রিয় ডেমো মার্কেট মুভমেন্ট</div>
+  </div>
+  <span class="demo-tag">DEMO DATA</span>
+ </div>
+
+ <div class="chart-head">
+  <div class="asset-icon" id="mainIcon">₿</div>
+  <div>
+   <div class="asset-name" id="mainName">Bitcoin</div>
+   <div class="asset-symbol" id="mainSymbol">BTC / USDT</div>
+  </div>
+  <div class="current-price">
+   <div id="mainPrice">$67,450.00</div>
+   <div id="mainChange" class="stat-change up">+1.25%</div>
+  </div>
+ </div>
+
+ <div class="timeframes" style="margin-top:20px">
+  <button onclick="setRange('1M',this)">1M</button>
+  <button onclick="setRange('5M',this)">5M</button>
+  <button onclick="setRange('15M',this)">15M</button>
+  <button class="active" onclick="setRange('1H',this)">1H</button>
+  <button onclick="setRange('1D',this)">1D</button>
+ </div>
+
+ <div class="chart-box">
+  <canvas id="marketChart"></canvas>
+ </div>
+ <div class="chart-foot">
+  <span id="rangeLabel">ডেমো চার্ট • ১ ঘণ্টা</span>
+  <span>● Automatic Simulation</span>
+ </div>
+</section>
+
+<section class="panel">
+ <div class="panel-heading">
+  <div>
+   <h2>◈ জনপ্রিয় মার্কেট</h2>
+   <div class="sub">কয়েন নির্বাচন করলে উপরের চার্ট বদলাবে</div>
+  </div>
+  <span class="sub">04 ASSETS</span>
+ </div>
+ <div class="market-grid" id="marketCards"></div>
+</section>
+
+<section class="panel" id="watchlist">
+ <div class="panel-heading">
+  <div>
+   <h2>☆ মার্কেট ওয়াচলিস্ট</h2>
+   <div class="sub">দামের পরিবর্তন পর্যবেক্ষণ করুন</div>
+  </div>
+  <span class="demo-tag">DEMO</span>
+ </div>
+ <div class="table-wrap">
+  <table>
+   <thead>
+    <tr>
+     <th>অ্যাসেট</th>
+     <th>দাম</th>
+     <th>২৪ ঘণ্টার পরিবর্তন</th>
+     <th>অবস্থা</th>
+    </tr>
+   </thead>
+   <tbody id="marketTable"></tbody>
+  </table>
+ </div>
+</section>
+
+<div class="two-col" id="overview">
+ <section class="panel">
+  <h2>📊 মার্কেট ওভারভিউ</h2>
+  <div class="info-line"><span>মোট অ্যাসেট</span><b>৪টি</b></div>
+  <div class="info-line"><span>ডেটা সোর্স</span><b>Simulation</b></div>
+  <div class="info-line"><span>আপডেট</span><b>প্রতি ২ সেকেন্ডে</b></div>
+  <div class="info-line"><span>ট্রেডিং</span><b>বন্ধ / Demo</b></div>
+ </section>
+
+ <section class="panel" id="about">
+  <h2>✦ ANK COIN BD</h2>
+  <p class="muted">
+   ANK COIN BD একটি ডিজিটাল মার্কেট ড্যাশবোর্ডের
+   প্রজেক্ট। এখানে কাল্পনিক মার্কেট ডেটা ব্যবহার করে
+   চার্ট, দামের ওঠানামা এবং শতাংশ পরিবর্তন প্রদর্শন করা হয়।
   </p>
-  <a class="btn" href="#announcement">বিশেষ ঘোষণা দেখুন</a>
+  <div class="info-line"><span>প্রজেক্ট প্রতিনিধি</span><b>Mohammad Ayaan</b></div>
+  <div class="info-line"><span>প্রজেক্ট</span><b>২০২৬–২০২৭</b></div>
+ </section>
 </div>
 
-<section id="themes">
-  <h2>🎨 আপনার পছন্দের থিম নির্বাচন করুন</h2>
-  <p class="muted">নিচের পাঁচটি ডিজাইনের যেকোনো একটিতে ক্লিক করুন।</p>
-  <div class="theme-list" style="margin-top:18px">
-    <button class="theme-option active" onclick="setTheme('gold',this)">① Dark Gold</button>
-    <button class="theme-option" onclick="setTheme('blue',this)">② Ocean Blue</button>
-    <button class="theme-option" onclick="setTheme('purple',this)">③ Royal Purple</button>
-    <button class="theme-option" onclick="setTheme('green',this)">④ Emerald Green</button>
-    <button class="theme-option" onclick="setTheme('red',this)">⑤ Ruby Red</button>
-  </div>
+<section class="panel" id="rules">
+ <h2>📜 নিয়মাবলি ও গুরুত্বপূর্ণ তথ্য</h2>
+ <div class="info-line"><span>১.</span><b>এটি একটি ডেমো মার্কেট সিমুলেশন।</b></div>
+ <div class="info-line"><span>২.</span><b>প্রদর্শিত দাম বাস্তব বাজারের দাম নয়।</b></div>
+ <div class="info-line"><span>৩.</span><b>এখানে বাস্তব Buy / Sell অর্ডার হয় না।</b></div>
+ <div class="info-line"><span>৪.</span><b>কোনো লাভ বা রিটার্ন নিশ্চিত নয়।</b></div>
+ <div class="info-line"><span>৫.</span><b>অর্থ পাঠানোর আগে সব তথ্য ও ঝুঁকি যাচাই করুন।</b></div>
 </section>
 
-<section id="about">
-  <h2>প্রজেক্ট পরিচিতি</h2>
-  <div class="panel">
-    <h3 style="color:var(--gold)">ANK COIN BD</h3>
-    <p class="muted">
-      এটি একটি ডিজিটাল প্রজেক্টের তথ্যভিত্তিক ওয়েবসাইট।
-      প্রজেক্টের কার্যক্রম, পরিকল্পনা, শর্তাবলি ও আপডেট
-      সম্পর্কে এখানে তথ্য প্রকাশ করা হবে।
-    </p>
-    <p style="margin-top:12px"><b>প্রজেক্ট প্রতিনিধি:</b> Mohammad Ayaan</p>
-    <p><b>প্রজেক্ট সময়কাল:</b> ২০২৬–২০২৭</p>
-  </div>
+<section class="panel" id="contact">
+ <h2>☎ যোগাযোগ</h2>
+ <p class="muted">প্রজেক্ট সম্পর্কে বিস্তারিত জানতে সরাসরি যোগাযোগ করুন।</p>
+ <p style="margin-top:10px"><b>নাম:</b> Mohammad Ayaan</p>
+ <a class="contact-btn" href="https://wa.me/8801329564879"
+ target="_blank" rel="noopener">WhatsApp Support ↗</a>
 </section>
 
-<section id="announcement">
-  <h2>📢 বিশেষ ঘোষণা</h2>
-  <div class="panel">
-    <h3 style="color:var(--gold)">২০২৬–২০২৭ ইনভেস্টমেন্ট প্রজেক্ট</h3>
-    <p class="muted">
-      আমাদের নতুন প্রজেক্টের তথ্য ও প্রস্তাবিত কাঠামো
-      সম্পর্কে বিস্তারিত নিচে দেওয়া হলো।
-    </p>
-    <p style="margin-top:15px">
-      আগ্রহী ব্যক্তিরা প্রজেক্টের বিস্তারিত তথ্য, প্রকৃত ব্যবসায়িক
-      কার্যক্রম, ঝুঁকি এবং লিখিত শর্তাবলি যাচাই করে সিদ্ধান্ত নেবেন।
-    </p>
-  </div>
-</section>
-
-<section id="calculation">
-  <h2>💰 সম্ভাব্য হিসাবের উদাহরণ</h2>
-  <div class="panel">
-    <p class="muted">
-      নিচের টেবিলটি ১% দৈনিক হার ধরে করা একটি গাণিতিক উদাহরণ।
-      এটি কোনো বাস্তব আয়, অনুমোদিত বিনিয়োগ অফার বা
-      নিশ্চিত রিটার্নের প্রতিশ্রুতি নয়।
-    </p>
-    <div class="table-wrap" style="margin-top:15px">
-      <table>
-        <thead>
-          <tr><th>উদাহরণমূলক অর্থ</th><th>১% গাণিতিক হিসাব</th><th>৩০ দিনের হিসাব</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>৳১,০০০</td><td>৳১০</td><td>৳৩০০</td></tr>
-          <tr><td>৳২,০০০</td><td>৳২০</td><td>৳৬০০</td></tr>
-          <tr><td>৳৩,০০০</td><td>৳৩০</td><td>৳৯০০</td></tr>
-          <tr><td>৳৪,০০০</td><td>৳৪০</td><td>৳১,২০০</td></tr>
-          <tr><td>৳৫,০০০</td><td>৳৫০</td><td>৳১,৫০০</td></tr>
-          <tr><td>৳১০,০০০</td><td>৳১০০</td><td>৳৩,০০০</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section id="rules">
-  <h2>📜 প্রস্তাবিত চুক্তির শর্তাবলি</h2>
-  <div class="panel">
-    <ol style="padding-left:22px">
-      <li>যেকোনো অংশগ্রহণের আগে লিখিত চুক্তি ও প্রকল্পের আইনগত অবস্থা যাচাই করতে হবে।</li>
-      <li>প্রস্তাবিত কাঠামোতে ন্যূনতম ৩ মাসের সময়সীমার কথা বলা হয়েছে; এটি কার্যকর চুক্তি নয়।</li>
-      <li>মূলধন উত্তোলনের সময় ও পদ্ধতি চূড়ান্ত লিখিত চুক্তিতে স্পষ্ট থাকতে হবে।</li>
-      <li>লাভ বা অর্থ বণ্টনের কোনো নিশ্চয়তা নেই; তা প্রকৃত ব্যবসায়িক ফলাফল ও ঝুঁকির ওপর নির্ভরশীল।</li>
-      <li>কোনো অর্থ দেওয়ার আগে সব শর্ত, ফি, ঝুঁকি ও আইনগত অনুমোদন যাচাই করুন।</li>
-    </ol>
-  </div>
-</section>
-
-<section id="risk">
-  <h2>⚠️ গুরুত্বপূর্ণ ঘোষণা</h2>
-  <div class="notice">
-    <b>সতর্কবার্তা:</b>
-    বিনিয়োগে মূলধন হারানোর ঝুঁকি থাকতে পারে।
-    দৈনিক বা মাসিক কোনো নির্দিষ্ট রিটার্ন নিশ্চিত নয়।
-    প্রকল্পের বাস্তব ব্যবসায়িক কার্যক্রম, অর্থের ব্যবহার,
-    আইনগত অনুমোদন ও ঝুঁকি যাচাই না করে কাউকে অর্থ প্রদান করবেন না।
-    এই ওয়েবসাইটে কোনো ডিপোজিট, পেমেন্ট বা উত্তোলন ব্যবস্থা নেই।
-  </div>
-</section>
-
-<section id="contact">
-  <h2>📞 যোগাযোগ করুন</h2>
-  <div class="panel">
-    <p><b>নাম:</b> Mohammad Ayaan</p>
-    <p><b>প্রজেক্ট:</b> ANK COIN BD</p>
-    <p class="muted" style="margin-top:12px">
-      বিস্তারিত তথ্যের জন্য নিচের WhatsApp বাটনে ক্লিক করুন।
-    </p>
-    <a class="btn" style="margin-top:15px"
-       href="https://wa.me/8801329564879"
-       target="_blank" rel="noopener">
-       WhatsApp-এ যোগাযোগ করুন
-    </a>
-  </div>
-</section>
+<div class="disclaimer">
+ <b>⚠️ ডেমো ও ঝুঁকি সংক্রান্ত ঘোষণা:</b>
+ এই ওয়েবসাইটে দেখানো সব দাম, চার্ট, শতাংশ এবং মার্কেট মুভমেন্ট
+ কাল্পনিকভাবে তৈরি। এগুলো Bitcoin বা অন্য কোনো ক্রিপ্টোকারেন্সির
+ প্রকৃত লাইভ মূল্য নয়। এই ড্যাশবোর্ড কোনো বিনিয়োগ পরামর্শ,
+ লাভের প্রতিশ্রুতি, বাস্তব ট্রেডিং বা অর্থ লেনদেনের ব্যবস্থা নয়।
+</div>
 
 <footer>
-  <p>© 2026–2027 ANK COIN BD</p>
-  <p class="small">Official Project Information Website</p>
+ © 2026–2027 ANK COIN BD • Digital Market Dashboard
+ <br>Designed for demonstration purposes
 </footer>
 
-<a class="whatsapp"
-   href="https://wa.me/8801329564879"
-   target="_blank" rel="noopener">
-   WhatsApp Support
-</a>
+</main>
+</div>
+</div>
+
+<div class="drawer-bg" id="drawerBg" onclick="outsideClose(event)">
+ <div class="drawer">
+  <div class="drawer-head">
+   <b style="color:var(--gold)">ANK COIN BD</b>
+   <button onclick="closeDrawer()">×</button>
+  </div>
+  <a href="#dashboard" onclick="closeDrawer()">▦ ড্যাশবোর্ড</a>
+  <a href="#market" onclick="closeDrawer()">◈ মার্কেট চার্ট</a>
+  <a href="#watchlist" onclick="closeDrawer()">☆ ওয়াচলিস্ট</a>
+  <a href="#overview" onclick="closeDrawer()">▤ মার্কেট ওভারভিউ</a>
+  <a href="#rules" onclick="closeDrawer()">☷ নিয়মাবলি</a>
+  <a href="#about" onclick="closeDrawer()">ⓘ প্রজেক্ট পরিচিতি</a>
+  <a href="#contact" onclick="closeDrawer()">✉ যোগাযোগ</a>
+ </div>
+</div>
 
 <script>
-function setTheme(theme,button){
-  document.body.setAttribute("data-theme",theme);
-  document.querySelectorAll(".theme-option").forEach(function(item){
-    item.classList.remove("active");
-  });
-  button.classList.add("active");
+const assets=[
+ {name:"Bitcoin",symbol:"BTC",icon:"₿",price:67450,change:1.25},
+ {name:"Ethereum",symbol:"ETH",icon:"Ξ",price:3520,change:-0.65},
+ {name:"BNB",symbol:"BNB",icon:"◆",price:610,change:2.18},
+ {name:"Solana",symbol:"SOL",icon:"◎",price:145,change:-1.12}
+];
+
+let selected=0;
+let range="1H";
+let historyData=[];
+let animationFrame=null;
+
+function randomWalk(value){
+ return value*(1+(Math.random()-.49)*.0025);
 }
 
-function openMenu(){
-  document.getElementById("drawer").classList.add("open");
+function createHistory(base){
+ let arr=[];
+ let v=base*.985;
+ for(let i=0;i<65;i++){
+  v=randomWalk(v);
+  arr.push(v);
+ }
+ return arr;
 }
-function closeMenu(){
-  document.getElementById("drawer").classList.remove("open");
+
+function formatPrice(value){
+ return "$"+value.toLocaleString("en-US",{
+  minimumFractionDigits:2,maximumFractionDigits:2
+ });
 }
-function closeMenuOutside(event){
-  if(event.target.id==="drawer") closeMenu();
+
+function formatChange(value){
+ return (value>=0?"+":"")+value.toFixed(2)+"%";
 }
+
+function renderCards(){
+ const cards=document.getElementById("marketCards");
+ cards.innerHTML=assets.map((a,i)=>`
+ <div class="market-card ${selected===i?'selected':''}"
+ onclick="selectAsset(${i})">
+  <div class="market-top">
+   <span class="market-symbol">${a.icon} ${a.symbol}</span>
+   <span class="${a.change>=0?'up':'down'}">
+    ${a.change>=0?'↗':'↘'}
+   </span>
+  </div>
+  <div class="market-full">${a.name}</div>
+  <div class="market-price">${formatPrice(a.price)}</div>
+  <div class="market-percent ${a.change>=0?'up':'down'}">
+   ${formatChange(a.change)} (24H)
+  </div>
+ </div>`).join("");
+}
+
+function renderTable(){
+ document.getElementById("marketTable").innerHTML=assets.map(a=>`
+ <tr>
+  <td><div class="coin-cell">
+   <span class="coin-round">${a.icon}</span>
+   <span><b>${a.name}</b><br><small>${a.symbol}</small></span>
+  </div></td>
+  <td>${formatPrice(a.price)}</td>
+  <td class="${a.change>=0?'up':'down'}">${formatChange(a.change)}</td>
+  <td><span class="badge ${a.change<0?'loss':''}">
+   ${a.change>=0?'বাড়ছে':'কমছে'}
+  </span></td>
+ </tr>`).join("");
+}
+
+function updateMain(){
+ const a=assets[selected];
+ document.getElementById("mainIcon").innerText=a.icon;
+ document.getElementById("mainName").innerText=a.name;
+ document.getElementById("mainSymbol").innerText=a.symbol+" / USDT";
+ document.getElementById("mainPrice").innerText=formatPrice(a.price);
+ const change=document.getElementById("mainChange");
+ change.innerText=formatChange(a.change);
+ change.className="stat-change "+(a.change>=0?"up":"down");
+}
+
+function selectAsset(i){
+ selected=i;
+ historyData=createHistory(assets[i].price);
+ renderCards();
+ updateMain();
+ drawChart();
+}
+
+function setRange(r,button){
+ range=r;
+ document.querySelectorAll(".timeframes button").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+ const labels={"1M":"১ মিনিট","5M":"৫ মিনিট","15M":"১৫ মিনিট","1H":"১ ঘণ্টা","1D":"১ দিন"};
+ document.getElementById("rangeLabel").innerText="ডেমো চার্ট • "+labels[r];
+ drawChart();
+}
+
+function drawChart(){
+ const canvas=document.getElementById("marketChart");
+ const rect=canvas.getBoundingClientRect();
+ if(rect.width===0)return;
+ const dpr=window.devicePixelRatio||1;
+ canvas.width=rect.width*dpr;
+ canvas.height=rect.height*dpr;
+ const ctx=canvas.getContext("2d");
+ ctx.scale(dpr,dpr);
+ const w=rect.width,h=rect.height;
+ const pad={l:8,r:58,t:15,b:22};
+ const cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;
+ const data=historyData;
+ const min=Math.min(...data)*.998;
+ const max=Math.max(...data)*1.002;
+ const y=v=>pad.t+(max-v)/(max-min)*ch;
+ const x=i=>pad.l+i/(data.length-1)*cw;
+
+ ctx.clearRect(0,0,w,h);
+ ctx.font="10px Outfit";
+ ctx.strokeStyle="#273140";
+ ctx.lineWidth=1;
+
+ for(let i=0;i<=4;i++){
+  let yy=pad.t+i*ch/4;
+  ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(w-pad.r,yy);ctx.stroke();
+  let val=max-i*(max-min)/4;
+  ctx.fillStyle="#8993a5";
+  ctx.fillText(val.toFixed(0),w-pad.r+7,yy+3);
+ }
+ for(let i=0;i<5;i++){
+  let xx=pad.l+i*cw/4;
+  ctx.beginPath();ctx.moveTo(xx,pad.t);ctx.lineTo(xx,h-pad.b);ctx.stroke();
+ }
+
+ const up=data[data.length-1]>=data[0];
+ const color=up?"#19c784":"#f05268";
+ const gradient=ctx.createLinearGradient(0,pad.t,0,h-pad.b);
+ gradient.addColorStop(0,up?"rgba(25,199,132,.28)":"rgba(240,82,104,.25)");
+ gradient.addColorStop(1,"rgba(0,0,0,0)");
+
+ ctx.beginPath();
+ data.forEach((v,i)=>{
+  if(i===0)ctx.moveTo(x(i),y(v));
+  else ctx.lineTo(x(i),y(v));
+ });
+ ctx.lineTo(x(data.length-1),h-pad.b);
+ ctx.lineTo(x(0),h-pad.b);
+ ctx.closePath();
+ ctx.fillStyle=gradient;
+ ctx.fill();
+
+ ctx.beginPath();
+ data.forEach((v,i)=>{
+  if(i===0)ctx.moveTo(x(i),y(v));
+  else ctx.lineTo(x(i),y(v));
+ });
+ ctx.strokeStyle=color;ctx.lineWidth=2;
+ ctx.shadowColor=color;ctx.shadowBlur=7;
+ ctx.stroke();ctx.shadowBlur=0;
+
+ let last=data[data.length-1];
+ ctx.beginPath();ctx.arc(x(data.length-1),y(last),4,0,Math.PI*2);
+ ctx.fillStyle=color;ctx.fill();
+}
+
+function updateMarket(){
+ assets.forEach(a=>{
+  a.price=randomWalk(a.price);
+  a.change+=((Math.random()-.49)*.10);
+  a.change=Math.max(-9.99,Math.min(9.99,a.change));
+ });
+ historyData.push(assets[selected].price);
+ if(historyData.length>65)historyData.shift();
+
+ renderCards();
+ renderTable();
+ updateMain();
+ drawChart();
+
+ document.getElementById("clock").innerText=
+ new Date().toLocaleTimeString("en-GB");
+}
+
+function openDrawer(){
+ document.getElementById("drawerBg").classList.add("open");
+}
+function closeDrawer(){
+ document.getElementById("drawerBg").classList.remove("open");
+}
+function outsideClose(e){
+ if(e.target.id==="drawerBg")closeDrawer();
+}
+
+historyData=createHistory(assets[0].price);
+renderCards();
+renderTable();
+updateMain();
+drawChart();
+updateMarket();
+setInterval(updateMarket,2000);
+
+window.addEventListener("resize",drawChart);
 </script>
-
 </body>
 </html>
