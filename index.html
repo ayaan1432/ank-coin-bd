@@ -3,317 +3,292 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANK COIN BD | Official Website</title>
+<title>ANK COIN BD | Official Project</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+:root {
+  --bg:#090d18;
+  --panel:#151e2e;
+  --gold:#e9b83f;
+  --text:#ffffff;
+  --muted:#bdc5d3;
+  --line:#57451e;
 }
-
-body {
-    background: #090d18;
-    color: white;
-    line-height: 1.7;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  line-height:1.75;transition:.35s;
 }
-
-header {
-    background: #111827;
-    padding: 18px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #d6a83d;
+body[data-theme="blue"]{
+  --bg:#071525;--panel:#102b46;--gold:#54c8ff;
+  --line:#205b80;
 }
-
-.logo {
-    color: #f4c44e;
-    font-size: 25px;
-    font-weight: bold;
+body[data-theme="purple"]{
+  --bg:#150d20;--panel:#281638;--gold:#d6a5ff;
+  --line:#69418b;
 }
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 18px;
-    font-size: 14px;
+body[data-theme="green"]{
+  --bg:#071912;--panel:#102c20;--gold:#72e6a3;
+  --line:#286b48;
 }
-
-nav a:hover {
-    color: #f4c44e;
+body[data-theme="red"]{
+  --bg:#1b0c10;--panel:#30151d;--gold:#ff9a9a;
+  --line:#78333d;
 }
-
-.hero {
-    text-align: center;
-    padding: 85px 20px;
-    background: linear-gradient(140deg, #111827, #18243a);
+header{
+  position:sticky;top:0;z-index:10;
+  background:var(--panel);border-bottom:1px solid var(--line);
+  padding:13px 5%;display:flex;justify-content:space-between;
+  align-items:center;gap:12px;
 }
-
-.coin {
-    font-size: 75px;
-    color: #f4c44e;
-    margin-bottom: 15px;
+.logo{font-size:21px;font-weight:900;color:var(--gold)}
+.menu-btn,.btn{
+  border:0;border-radius:9px;padding:11px 17px;
+  background:var(--gold);color:#111;font-weight:bold;
+  cursor:pointer;text-decoration:none;display:inline-block;
 }
-
-.hero h1 {
-    font-size: 40px;
-    color: #f4c44e;
+.menu-btn{font-size:20px;padding:6px 13px}
+.hero{
+  padding:75px 20px;text-align:center;
+  background:radial-gradient(ellipse at top,var(--panel),var(--bg));
 }
-
-.hero p {
-    color: #d1d5db;
-    margin: 15px auto 25px;
-    max-width: 600px;
+.coin{font-size:65px;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px)}}
+.hero h1{font-size:clamp(28px,5vw,48px);color:var(--gold)}
+.hero p{max-width:650px;margin:15px auto;color:var(--muted)}
+section{padding:45px 6%;scroll-margin-top:75px}
+h2{color:var(--gold);font-size:27px;margin-bottom:20px}
+.panel{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:16px;padding:23px;margin:12px 0;
+  box-shadow:0 10px 30px #0003;
+  animation:appear .7s ease both;
 }
-
-.btn {
-    display: inline-block;
-    background: #e9b83f;
-    color: #111827;
-    padding: 12px 28px;
-    border-radius: 7px;
-    text-decoration: none;
-    font-weight: bold;
+@keyframes appear{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
 }
-
-section {
-    padding: 55px 7%;
-    text-align: center;
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:17px;
 }
-
-.section-title {
-    color: #f4c44e;
-    font-size: 29px;
-    margin-bottom: 25px;
+.muted{color:var(--muted)}
+.theme-list{display:flex;flex-wrap:wrap;gap:10px}
+.theme-option{
+  background:var(--panel);color:var(--text);
+  border:1px solid var(--line);padding:12px 15px;
+  border-radius:10px;cursor:pointer;
 }
-
-.about {
-    max-width: 750px;
-    margin: auto;
-    color: #d1d5db;
+.theme-option.active{background:var(--gold);color:#111}
+table{width:100%;border-collapse:collapse;min-width:470px}
+th,td{padding:11px;border-bottom:1px solid var(--line);text-align:center}
+th{color:var(--gold)}
+.table-wrap{overflow-x:auto}
+.notice{
+  border-left:4px solid var(--gold);
+  background:var(--panel);padding:18px;border-radius:9px;
 }
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 25px;
+#drawer{
+  position:fixed;z-index:30;inset:0;background:#0009;
+  opacity:0;visibility:hidden;transition:.3s;
 }
-
-.card {
-    background: #151e2e;
-    border: 1px solid #57451e;
-    border-radius: 12px;
-    padding: 25px 18px;
+#drawer.open{opacity:1;visibility:visible}
+.drawer-content{
+  width:min(340px,85%);height:100%;background:var(--panel);
+  padding:25px;transform:translateX(-100%);transition:.3s;
+  overflow-y:auto;
 }
-
-.card h3 {
-    color: #f4c44e;
-    margin-bottom: 10px;
+#drawer.open .drawer-content{transform:translateX(0)}
+.drawer-content a{
+  display:block;padding:12px;color:var(--text);
+  text-decoration:none;border-bottom:1px solid var(--line);
 }
-
-.card p {
-    color: #d1d5db;
+.close{float:right;background:none;color:var(--gold);border:0;font-size:25px}
+footer{text-align:center;padding:25px;background:#050811;color:#aaa}
+.whatsapp{
+  position:fixed;right:18px;bottom:18px;z-index:15;
+  background:#20c66a;color:white;border-radius:50px;
+  padding:13px 19px;text-decoration:none;font-weight:bold;
+  box-shadow:0 5px 20px #0006;
 }
-
-.calculator {
-    max-width: 450px;
-    margin: auto;
-    background: #151e2e;
-    padding: 25px;
-    border-radius: 12px;
-    border: 1px solid #57451e;
-}
-
-input {
-    width: 100%;
-    padding: 13px;
-    margin: 12px 0;
-    border-radius: 7px;
-    border: 1px solid #777;
-    background: #090d18;
-    color: white;
-    font-size: 16px;
-}
-
-.result {
-    color: #f4c44e;
-    margin-top: 15px;
-    font-size: 19px;
-}
-
-.notice {
-    background: #291f12;
-    border: 1px solid #a87925;
-    padding: 18px;
-    border-radius: 10px;
-    color: #f5dfaa;
-    max-width: 850px;
-    margin: 20px auto;
-    text-align: left;
-}
-
-.contact p {
-    margin: 10px;
-    color: #ddd;
-}
-
-footer {
-    background: #050811;
-    padding: 25px;
-    text-align: center;
-    color: #aaa;
-    border-top: 1px solid #57451e;
-}
-
-@media(max-width: 650px) {
-    header {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    nav a {
-        margin: 5px;
-    }
-
-    .hero h1 {
-        font-size: 30px;
-    }
+.small{font-size:13px;color:var(--muted)}
+@media(max-width:600px){
+  header{padding:12px 4%}
+  .logo{font-size:17px}
+  section{padding:35px 5%}
 }
 </style>
 </head>
 
-<body>
+<body data-theme="gold">
 
 <header>
-    <div class="logo">ANK COIN BD</div>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#calculator">Calculator</a>
-        <a href="#contact">Contact</a>
-    </nav>
+  <div class="logo">🪙 ANK COIN BD</div>
+  <button class="menu-btn" onclick="openMenu()" aria-label="Open menu">☰</button>
 </header>
 
-<div class="hero" id="home">
-    <div class="coin">🪙</div>
-    <h1>WELCOME TO ANK COIN BD</h1>
-    <p>
-        Welcome to the official ANK COIN BD website.
-        Explore our project information, features and updates.
-    </p>
-    <a href="#about" class="btn">Explore More</a>
+<div id="drawer" onclick="closeMenuOutside(event)">
+  <div class="drawer-content">
+    <button class="close" onclick="closeMenu()">×</button>
+    <h2>মেনু ও নিয়মাবলি</h2>
+    <a href="#home" onclick="closeMenu()">হোম</a>
+    <a href="#themes" onclick="closeMenu()">পাঁচটি থিম</a>
+    <a href="#about" onclick="closeMenu()">প্রজেক্ট পরিচিতি</a>
+    <a href="#announcement" onclick="closeMenu()">বিশেষ ঘোষণা</a>
+    <a href="#calculation" onclick="closeMenu()">সম্ভাব্য হিসাব</a>
+    <a href="#rules" onclick="closeMenu()">চুক্তির শর্তাবলি</a>
+    <a href="#risk" onclick="closeMenu()">ঝুঁকি ও সতর্কতা</a>
+    <a href="#contact" onclick="closeMenu()">যোগাযোগ</a>
+  </div>
 </div>
 
+<div class="hero" id="home">
+  <div class="coin">🪙</div>
+  <h1>WELCOME TO ANK COIN BD</h1>
+  <p>
+    স্বাগতম ANK COIN BD-এর অফিসিয়াল প্রজেক্ট পেজে।
+    এখানে প্রজেক্ট পরিচিতি, ঘোষণা, শর্তাবলি ও আপডেট দেখুন।
+  </p>
+  <a class="btn" href="#announcement">বিশেষ ঘোষণা দেখুন</a>
+</div>
+
+<section id="themes">
+  <h2>🎨 আপনার পছন্দের থিম নির্বাচন করুন</h2>
+  <p class="muted">নিচের পাঁচটি ডিজাইনের যেকোনো একটিতে ক্লিক করুন।</p>
+  <div class="theme-list" style="margin-top:18px">
+    <button class="theme-option active" onclick="setTheme('gold',this)">① Dark Gold</button>
+    <button class="theme-option" onclick="setTheme('blue',this)">② Ocean Blue</button>
+    <button class="theme-option" onclick="setTheme('purple',this)">③ Royal Purple</button>
+    <button class="theme-option" onclick="setTheme('green',this)">④ Emerald Green</button>
+    <button class="theme-option" onclick="setTheme('red',this)">⑤ Ruby Red</button>
+  </div>
+</section>
+
 <section id="about">
-    <h2 class="section-title">About ANK COIN</h2>
-    <p class="about">
-        ANK COIN BD একটি ডিজিটাল প্রজেক্টের ধারণা।
-        এখানে আমাদের প্রজেক্ট সম্পর্কে তথ্য, আপডেট
-        এবং ভবিষ্যৎ পরিকল্পনা প্রকাশ করা হবে।
-        যেকোনো আর্থিক সিদ্ধান্ত নেওয়ার আগে প্রকল্পের
-        সত্যতা, ঝুঁকি এবং শর্তাবলি যাচাই করুন।
+  <h2>প্রজেক্ট পরিচিতি</h2>
+  <div class="panel">
+    <h3 style="color:var(--gold)">ANK COIN BD</h3>
+    <p class="muted">
+      এটি একটি ডিজিটাল প্রজেক্টের তথ্যভিত্তিক ওয়েবসাইট।
+      প্রজেক্টের কার্যক্রম, পরিকল্পনা, শর্তাবলি ও আপডেট
+      সম্পর্কে এখানে তথ্য প্রকাশ করা হবে।
     </p>
+    <p style="margin-top:12px"><b>প্রজেক্ট প্রতিনিধি:</b> Mohammad Ayaan</p>
+    <p><b>প্রজেক্ট সময়কাল:</b> ২০২৬–২০২৭</p>
+  </div>
 </section>
 
-<section>
-    <h2 class="section-title">Project Features</h2>
+<section id="announcement">
+  <h2>📢 বিশেষ ঘোষণা</h2>
+  <div class="panel">
+    <h3 style="color:var(--gold)">২০২৬–২০২৭ ইনভেস্টমেন্ট প্রজেক্ট</h3>
+    <p class="muted">
+      আমাদের নতুন প্রজেক্টের তথ্য ও প্রস্তাবিত কাঠামো
+      সম্পর্কে বিস্তারিত নিচে দেওয়া হলো।
+    </p>
+    <p style="margin-top:15px">
+      আগ্রহী ব্যক্তিরা প্রজেক্টের বিস্তারিত তথ্য, প্রকৃত ব্যবসায়িক
+      কার্যক্রম, ঝুঁকি এবং লিখিত শর্তাবলি যাচাই করে সিদ্ধান্ত নেবেন।
+    </p>
+  </div>
+</section>
 
-    <div class="cards">
-        <div class="card">
-            <h3>🪙 Digital Coin</h3>
-            <p>প্রজেক্টের ডিজিটাল কয়েন সম্পর্কিত তথ্য।</p>
-        </div>
-
-        <div class="card">
-            <h3>📊 Project Updates</h3>
-            <p>প্রজেক্টের নতুন খবর ও গুরুত্বপূর্ণ আপডেট।</p>
-        </div>
-
-        <div class="card">
-            <h3>🔐 Transparency</h3>
-            <p>প্রকল্পের শর্তাবলি ও ঝুঁকি সম্পর্কে স্বচ্ছ তথ্য।</p>
-        </div>
+<section id="calculation">
+  <h2>💰 সম্ভাব্য হিসাবের উদাহরণ</h2>
+  <div class="panel">
+    <p class="muted">
+      নিচের টেবিলটি ১% দৈনিক হার ধরে করা একটি গাণিতিক উদাহরণ।
+      এটি কোনো বাস্তব আয়, অনুমোদিত বিনিয়োগ অফার বা
+      নিশ্চিত রিটার্নের প্রতিশ্রুতি নয়।
+    </p>
+    <div class="table-wrap" style="margin-top:15px">
+      <table>
+        <thead>
+          <tr><th>উদাহরণমূলক অর্থ</th><th>১% গাণিতিক হিসাব</th><th>৩০ দিনের হিসাব</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>৳১,০০০</td><td>৳১০</td><td>৳৩০০</td></tr>
+          <tr><td>৳২,০০০</td><td>৳২০</td><td>৳৬০০</td></tr>
+          <tr><td>৳৩,০০০</td><td>৳৩০</td><td>৳৯০০</td></tr>
+          <tr><td>৳৪,০০০</td><td>৳৪০</td><td>৳১,২০০</td></tr>
+          <tr><td>৳৫,০০০</td><td>৳৫০</td><td>৳১,৫০০</td></tr>
+          <tr><td>৳১০,০০০</td><td>৳১০০</td><td>৳৩,০০০</td></tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </section>
 
-<section id="calculator">
-    <h2 class="section-title">Amount Calculator</h2>
-
-    <div class="calculator">
-        <p>তোমার টাকার পরিমাণ লিখে হিসাব দেখো।</p>
-
-        <input
-            type="number"
-            id="amount"
-            placeholder="Amount লিখুন (৳)"
-            min="0"
-        >
-
-        <button class="btn" onclick="calculate()">
-            Calculate
-        </button>
-
-        <div class="result" id="result">
-            এখানে হিসাব দেখা যাবে।
-        </div>
-
-        <p style="font-size:12px;color:#aaa;margin-top:12px;">
-            এটি শুধু সাধারণ অঙ্কের হিসাব। কোনো আয়,
-            মুনাফা বা বিনিয়োগের প্রতিশ্রুতি নয়।
-        </p>
-    </div>
+<section id="rules">
+  <h2>📜 প্রস্তাবিত চুক্তির শর্তাবলি</h2>
+  <div class="panel">
+    <ol style="padding-left:22px">
+      <li>যেকোনো অংশগ্রহণের আগে লিখিত চুক্তি ও প্রকল্পের আইনগত অবস্থা যাচাই করতে হবে।</li>
+      <li>প্রস্তাবিত কাঠামোতে ন্যূনতম ৩ মাসের সময়সীমার কথা বলা হয়েছে; এটি কার্যকর চুক্তি নয়।</li>
+      <li>মূলধন উত্তোলনের সময় ও পদ্ধতি চূড়ান্ত লিখিত চুক্তিতে স্পষ্ট থাকতে হবে।</li>
+      <li>লাভ বা অর্থ বণ্টনের কোনো নিশ্চয়তা নেই; তা প্রকৃত ব্যবসায়িক ফলাফল ও ঝুঁকির ওপর নির্ভরশীল।</li>
+      <li>কোনো অর্থ দেওয়ার আগে সব শর্ত, ফি, ঝুঁকি ও আইনগত অনুমোদন যাচাই করুন।</li>
+    </ol>
+  </div>
 </section>
 
-<section>
-    <h2 class="section-title">Important Information</h2>
-
-    <div class="notice">
-        <strong>সতর্কবার্তা:</strong>
-        ANK COIN BD-এর কোনো নির্দিষ্ট বা নিশ্চিত
-        দৈনিক/মাসিক মুনাফার নিশ্চয়তা দেওয়া হচ্ছে না।
-        কোনো অর্থ জমা দেওয়ার আগে প্রকল্পের আইনগত
-        অবস্থা, বাস্তব কার্যক্রম, ঝুঁকি এবং সম্পূর্ণ
-        শর্তাবলি যাচাই করুন। এই ওয়েবসাইটে কোনো
-        বাস্তব ডিপোজিট বা উত্তোলন ব্যবস্থা চালু নেই।
-    </div>
+<section id="risk">
+  <h2>⚠️ গুরুত্বপূর্ণ ঘোষণা</h2>
+  <div class="notice">
+    <b>সতর্কবার্তা:</b>
+    বিনিয়োগে মূলধন হারানোর ঝুঁকি থাকতে পারে।
+    দৈনিক বা মাসিক কোনো নির্দিষ্ট রিটার্ন নিশ্চিত নয়।
+    প্রকল্পের বাস্তব ব্যবসায়িক কার্যক্রম, অর্থের ব্যবহার,
+    আইনগত অনুমোদন ও ঝুঁকি যাচাই না করে কাউকে অর্থ প্রদান করবেন না।
+    এই ওয়েবসাইটে কোনো ডিপোজিট, পেমেন্ট বা উত্তোলন ব্যবস্থা নেই।
+  </div>
 </section>
 
-<section class="contact" id="contact">
-    <h2 class="section-title">Contact Us</h2>
-
-    <p><strong>Project Name:</strong> ANK COIN BD</p>
-    <p><strong>Founder:</strong> Anik</p>
-    <p><strong>WhatsApp:</strong> 01329564879</p>
-
-    <a
-        class="btn"
-        href="https://wa.me/8801329564879"
-        target="_blank"
-    >
-        WhatsApp Support
+<section id="contact">
+  <h2>📞 যোগাযোগ করুন</h2>
+  <div class="panel">
+    <p><b>নাম:</b> Mohammad Ayaan</p>
+    <p><b>প্রজেক্ট:</b> ANK COIN BD</p>
+    <p class="muted" style="margin-top:12px">
+      বিস্তারিত তথ্যের জন্য নিচের WhatsApp বাটনে ক্লিক করুন।
+    </p>
+    <a class="btn" style="margin-top:15px"
+       href="https://wa.me/8801329564879"
+       target="_blank" rel="noopener">
+       WhatsApp-এ যোগাযোগ করুন
     </a>
+  </div>
 </section>
 
 <footer>
-    <p>© 2026 ANK COIN BD. All Rights Reserved.</p>
-    <p>Official Project Website</p>
+  <p>© 2026–2027 ANK COIN BD</p>
+  <p class="small">Official Project Information Website</p>
 </footer>
 
+<a class="whatsapp"
+   href="https://wa.me/8801329564879"
+   target="_blank" rel="noopener">
+   WhatsApp Support
+</a>
+
 <script>
-function calculate() {
-    const amount = Number(document.getElementById("amount").value);
-    const result = document.getElementById("result");
+function setTheme(theme,button){
+  document.body.setAttribute("data-theme",theme);
+  document.querySelectorAll(".theme-option").forEach(function(item){
+    item.classList.remove("active");
+  });
+  button.classList.add("active");
+}
 
-    if (!Number.isFinite(amount) || amount <= 0) {
-        result.innerText = "সঠিক টাকার পরিমাণ লিখুন।";
-        return;
-    }
-
-    result.innerText = "আপনার দেওয়া পরিমাণ: ৳" +
-        amount.toLocaleString("en-BD");
+function openMenu(){
+  document.getElementById("drawer").classList.add("open");
+}
+function closeMenu(){
+  document.getElementById("drawer").classList.remove("open");
+}
+function closeMenuOutside(event){
+  if(event.target.id==="drawer") closeMenu();
 }
 </script>
 
